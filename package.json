@@ -1,5 +1,5 @@
 {
-    "name": "generator-yoSapy",
+    "name": "generator-yosapy",
     "version": "1.0.0",
     "description": "Bulk jasmine test file generator ",
     "main": "index.js",
