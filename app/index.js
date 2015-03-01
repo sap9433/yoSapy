@@ -23,9 +23,10 @@ var getNgModuleName = function(tree) {
 
 var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
-    var regex = /angular.module\(['"]eikyoApp['"]\).controller\(['"](.+)'/
+    var regex = /angular.module\(['"]eikyoApp['"]\).controller\(['"]([^'"]+)'/
     var ngComponent = regex.exec(fileString);
     var componentName;
+
     try{
         componentName = ngComponent[1];
     }catch(err){
@@ -60,7 +61,7 @@ module.exports = generators.Base.extend({
 
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
-
+        debugger
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
