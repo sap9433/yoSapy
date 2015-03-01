@@ -24,7 +24,6 @@ module.exports = generators.Base.extend({
         var file = this.fs.read(dirOrFilePath);
 
         var tree = programme(file);
-        debugger
         
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
