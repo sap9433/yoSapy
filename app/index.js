@@ -13,10 +13,8 @@ var loadAndParseFile = function(that) {
 var getNgModuleName = function(tree) {
     var ngModule;
     try {
-        var expressions = tree.callExpression('angular.module');
-        var firstExpression = expressions.nodes[0];
-        var firstArgument = firstExpression.arguments[0];
-        ngModule = firstArgument.value;
+        var module = tree.callExpression('angular.module').nodes[0].arguments[0];
+        ngModule = module.value;
     } catch (err) {
         ngModule = '#ngModuleName#'
     }
@@ -25,10 +23,9 @@ var getNgModuleName = function(tree) {
 
 var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
-    var regex = /angular[ .]+module\(['"]eikyoApp['"]\)[ .]+controller\(['"]([^'"]+)'/
+    var regex = /angular[ .]+module\(['"]eikyoApp['"]\)[ .]+controller\(['"]([^'"]+)'/;
     var ngComponent = regex.exec(fileString);
     var componentName;
-
     try {
         componentName = ngComponent[1];
     } catch (err) {
@@ -38,10 +35,14 @@ var getTestableComponentName = function(fileString, componentType) {
 };
 
 var getScopeVariables = function(fileString) {
-    //for detailed regex explanation see https://regex101.com/.
+    var index = 1; // default to the first capturing group
+    var matches = [];
+    var match;
     var regex = /\$scope\.([^=\.\$]*)[ +]=/g
-    var scopeVariables = regex.exec(fileString);
-    return scopeVariables;
+    while (match = regex.exec(fileString)) {
+        matches.push(match[index]);
+    }
+    return matches;
 }
 
 module.exports = generators.Base.extend({
