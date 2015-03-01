@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var programme = require('ast-query');
 var dirOrFilePath;
 
 module.exports = generators.Base.extend({
@@ -19,7 +20,12 @@ module.exports = generators.Base.extend({
     writing: function() {
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
         var filename = dirOrFileName.replace('.js', '');
+        
+        var file = this.fs.read(dirOrFilePath);
 
+        var tree = programme(file);
+        debugger
+        
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {

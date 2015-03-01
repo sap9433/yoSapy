@@ -1,24 +1,24 @@
 {
-    "name": "generator-yosapy",
-    "version": "1.0.1",
-    "description": "Bulk jasmine test file generator ",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sap9433/yoSapy"
-    },
-
-    "keywords": [
-        "yeoman-generator",
-        "jasmine generator",
-        "test generator"
-    ],
-    "author": "Saptarshi Chatterjee <saptarshichatterjee1@gmail.com>",
-    "license": "ISC",
-    "dependencies": {
-        "yeoman-generator": "^0.18.9"
-    }
+  "name": "generator-yosapy",
+  "version": "1.0.1",
+  "description": "Bulk jasmine test file generator ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sap9433/yoSapy"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "jasmine generator",
+    "test generator"
+  ],
+  "author": "Saptarshi Chatterjee <saptarshichatterjee1@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "ast-query": "^1.0.1",
+    "yeoman-generator": "^0.18.9"
+  }
 }
