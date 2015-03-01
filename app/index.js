@@ -1,12 +1,11 @@
 var generators = require('yeoman-generator');
-var programme = require('ast-query');
+var astQuery = require('ast-query');
 var dirOrFilePath;
 
 var loadAndParseFile = function(that) {
     //if (fs.existsSync(filename))
-    var file = that.fs.read(dirOrFilePath);
-    var tree = programme(file);
-    return tree;
+    var fileString = that.fs.read(dirOrFilePath);
+    return fileString;
 }
 
 var getNgModuleName = function(tree) {
@@ -20,6 +19,13 @@ var getNgModuleName = function(tree) {
         ngModule = '#ngModuleName#'
     }
     return ngModule;
+}
+
+var getTestableComponentName = function(fileString, componentType) {
+    //for detailed regex explanation see https://regex101.com/.
+    var regex = /angular.module\(['"]eikyoApp['"]\).controller\(['"](.+)'/
+    var ngComponent = regex.exec(fileString);
+    return ngComponent[1];
 }
 
 module.exports = generators.Base.extend({
@@ -40,15 +46,18 @@ module.exports = generators.Base.extend({
     writing: function() {
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
         var filename = dirOrFileName.replace('.js', '');
-        debugger
-        var tree = loadAndParseFile(this);
+        var fileString = loadAndParseFile(this);
+        var tree = astQuery(fileString);
+
         var ngModule = getNgModuleName(tree);
+        var componentName = getTestableComponentName(fileString, 'controller');
 
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
                 fileName: filename,
-                ngModule: ngModule
+                ngModule: ngModule,
+                componentName: componentName
             }
         );
     }

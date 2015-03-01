@@ -7,18 +7,18 @@ describe('Controller: <%= fileName %>', function() {
         $location = _$location_;
         scope = $rootScope.$new();
 
-        // Uncomment following line and provide dummy value for scope variable that's been used
-        // TypeError: 'undefined' is not an object (evaluating '$scope.staticText
-        scope.staticText = {week: "MyWeek"};
+        /* Uncomment following line and provide dummy value for scope variables that's been used and not injected by generator
+         e.g. -> TypeError: 'undefined' is not an object (evaluating '$scope.someDummy.someKey... )*/
+        // scope.someDummy = {someKey: "someValue"};
 
         createController = function() {
-            return $controller('<%= "DashboardCtrl" %>', {
+            return $controller('<%= componentName %>', {
                 '$scope': scope
             });
         };
     }));
 
     it('should have a method to check <your text goes here>', function() {
-        expect(2).toBe(2);
+        expect(3).toBe(3);
     });
 });
