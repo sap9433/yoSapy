@@ -18,7 +18,7 @@
   "author": "Saptarshi Chatterjee <saptarshichatterjee1@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "ast-query": "^1.0.1",
+    "ast-query": "^1.0.2",
     "yeoman-generator": "^0.18.9"
   }
 }
