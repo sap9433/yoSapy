@@ -5,6 +5,7 @@ var dirOrFilePath;
 var loadAndParseFile = function(that) {
     //if (fs.existsSync(filename))
     var fileString = that.fs.read(dirOrFilePath);
+    //Replace all white space character, including space, tab, form feed, line feed
     return fileString;
 }
 
@@ -56,8 +57,7 @@ module.exports = generators.Base.extend({
         var fileString = loadAndParseFile(this);
 
         var tree = astQuery(fileString);
-        //Replace all white space character, including space, tab, form feed, line feed
-        fileString = fileString.replace(/\s/g, "");
+        fileString = fileString.replace(/(\r\n|\n|\r)/gm,"");
 
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
