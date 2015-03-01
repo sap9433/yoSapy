@@ -18,10 +18,12 @@ module.exports = generators.Base.extend({
 
     writing: function() {
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
+        var filename = dirOrFileName.replace('.js', '');
+
         this.fs.copyTpl(
-            this.templatePath('dummyTest.js'),
-            this.destinationPath(dirOrFileName + '.js'), {
-                title: 'Templating with Yeoman'
+            this.templatePath('controllerTest.js'),
+            this.destinationPath(filename + '.js'), {
+                fileName: filename
             }
         );
     }
