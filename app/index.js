@@ -61,7 +61,6 @@ module.exports = generators.Base.extend({
 
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
-        debugger
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
