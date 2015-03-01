@@ -5,7 +5,9 @@ module.exports = generators.Base.extend({
         console.log(this.sourceRoot());
         this.fs.copyTpl(
             this.templatePath('dummyTest.js'),
-            this.destinationPath('ajeeb.js')
+            this.destinationPath('ajeeb.js'), {
+                title: 'Templating with Yeoman'
+            }
         );
     }
 });

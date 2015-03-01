@@ -1,1 +1,2 @@
-console.log("Saptarshi")
+<%= title %>
+console.log("<%= title %>")
