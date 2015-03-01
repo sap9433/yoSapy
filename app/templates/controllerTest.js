@@ -1,7 +1,7 @@
 describe('Controller: <%= fileName %>', function() {
     var scope, $location, createController;
 
-    beforeEach(module('eikyoApp'));
+    beforeEach(module('<%= ngModule %>'));
 
     beforeEach(inject(function($rootScope, $controller, _$location_) {
         $location = _$location_;
@@ -19,6 +19,6 @@ describe('Controller: <%= fileName %>', function() {
     }));
 
     it('should have a method to check <your text goes here>', function() {
-        expect(1).toBe(1);
+        expect(2).toBe(2);
     });
 });
