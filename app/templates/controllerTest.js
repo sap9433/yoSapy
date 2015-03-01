@@ -19,6 +19,6 @@ describe('Controller: <%= fileName %>', function() {
     }));
 
     it('should have a method to check <your text goes here>', function() {
-        expect(2).toBe(2);
+        expect(3).toBe(3);
     });
 });

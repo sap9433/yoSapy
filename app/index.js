@@ -11,7 +11,6 @@ var loadAndParseFile = function(that) {
 
 var getNgModuleName = function(tree) {
     var ngModule;
-    debugger
     try {
         var expressions = tree.callExpression('angular.module');
         var firstExpression = expressions.nodes[0];
@@ -44,8 +43,7 @@ module.exports = generators.Base.extend({
         this.prompt({
             type: 'input',
             name: 'dirOrFile',
-            message: 'Directory or File name',
-            default: this.appname
+            message: 'Directory or File name'
         }, function(answers) {
             dirOrFilePath = answers.dirOrFile.trim();
             done();
@@ -60,6 +58,7 @@ module.exports = generators.Base.extend({
         
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
+        
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
