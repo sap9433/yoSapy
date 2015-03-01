@@ -5,12 +5,13 @@ var dirOrFilePath;
 var loadAndParseFile = function(that) {
     //if (fs.existsSync(filename))
     var fileString = that.fs.read(dirOrFilePath);
-    
-    return fileString;
+    //Replace all white space character, comment , including space, tab, form feed, line feed
+    return fileString.replace(/ \/\/.+\n/g, '').replace(/(\r\n|\n|\r)/gm,"");
 }
 
 var getNgModuleName = function(tree) {
     var ngModule;
+    debugger
     try {
         var expressions = tree.callExpression('angular.module');
         var firstExpression = expressions.nodes[0];
@@ -24,7 +25,7 @@ var getNgModuleName = function(tree) {
 
 var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
-    var regex = /angular.module\(['"]eikyoApp['"]\).controller\(['"]([^'"]+)'/
+    var regex = /angular[ .]+module\(['"]eikyoApp['"]\)[ .]+controller\(['"]([^'"]+)'/
     var ngComponent = regex.exec(fileString);
     var componentName;
 
@@ -55,11 +56,8 @@ module.exports = generators.Base.extend({
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
         var filename = dirOrFileName.replace('.js', '');
         var fileString = loadAndParseFile(this);
-
         var tree = astQuery(fileString);
-        //Replace all white space character, including space, tab, form feed, line feed
-        fileString = fileString.replace(/(\r\n|\n|\r)/gm,"");
-
+        
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
         this.fs.copyTpl(
