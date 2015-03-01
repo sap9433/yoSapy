@@ -1,13 +1,14 @@
 var generators = require('yeoman-generator');
 var astQuery = require('ast-query');
+var _ = require('lodash');
 var dirOrFilePath;
 
 var loadAndParseFile = function(that) {
     //if (fs.existsSync(filename))
     var fileString = that.fs.read(dirOrFilePath);
     //Replace all white space character, comment , including space, tab, form feed, line feed
-    return fileString.replace(/ \/\/.+\n/g, '').replace(/(\r\n|\n|\r)/gm,"");
-}
+    return fileString.replace(/ \/\/.+\n/g, '').replace(/(\r\n|\n|\r)/gm, "");
+};
 
 var getNgModuleName = function(tree) {
     var ngModule;
@@ -20,7 +21,7 @@ var getNgModuleName = function(tree) {
         ngModule = '#ngModuleName#'
     }
     return ngModule;
-}
+};
 
 var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
@@ -28,12 +29,19 @@ var getTestableComponentName = function(fileString, componentType) {
     var ngComponent = regex.exec(fileString);
     var componentName;
 
-    try{
+    try {
         componentName = ngComponent[1];
-    }catch(err){
+    } catch (err) {
         componentName = "#testEntityName#"
     }
     return componentName;
+};
+
+var getScopeVariables = function(fileString) {
+    //for detailed regex explanation see https://regex101.com/.
+    var regex = /\$scope\.([^=\.\$]*)[ +]=/g
+    var scopeVariables = regex.exec(fileString);
+    return scopeVariables;
 }
 
 module.exports = generators.Base.extend({
@@ -52,19 +60,17 @@ module.exports = generators.Base.extend({
 
     writing: function() {
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
-        var filename = dirOrFileName.replace('.js', '');
         var fileString = loadAndParseFile(this);
+        var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
-        
-        var ngModule = getNgModuleName(tree);
-        var componentName = getTestableComponentName(fileString, 'controller');
-        
+
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
                 fileName: filename,
-                ngModule: ngModule,
-                componentName: componentName
+                ngModule: getNgModuleName(tree),
+                componentName: getTestableComponentName(fileString, 'controller'),
+                scopeVariables: getScopeVariables(fileString)
             }
         );
     }

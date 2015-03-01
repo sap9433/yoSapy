@@ -21,4 +21,13 @@ describe('Controller: <%= fileName %>', function() {
     it('should have a method to check <your text goes here>', function() {
         expect(3).toBe(3);
     });
+
+
+    
+    <% _.forEach(scopeVariables, function(user) { %>
+        '<li>'
+            <%- user %>
+        '</li>' 
+    <% }); %>
+    
 });
