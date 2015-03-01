@@ -1,2 +1,2 @@
 <%= title %>
-console.log("<%= title %>")
+console.log("yo <%= title %>")
