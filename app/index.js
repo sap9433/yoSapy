@@ -53,7 +53,10 @@ module.exports = generators.Base.extend({
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
         var filename = dirOrFileName.replace('.js', '');
         var fileString = loadAndParseFile(this);
+
         var tree = astQuery(fileString);
+        //Replace all white space character, including space, tab, form feed, line feed
+        fileString = fileString.replace(/\s/g, "");
 
         var ngModule = getNgModuleName(tree);
         var componentName = getTestableComponentName(fileString, 'controller');
