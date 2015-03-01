@@ -25,7 +25,13 @@ var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
     var regex = /angular.module\(['"]eikyoApp['"]\).controller\(['"](.+)'/
     var ngComponent = regex.exec(fileString);
-    return ngComponent[1];
+    var componentName;
+    try{
+        componentName = ngComponent[1];
+    }catch(err){
+        componentName = "#testEntityName#"
+    }
+    return componentName;
 }
 
 module.exports = generators.Base.extend({
@@ -38,7 +44,7 @@ module.exports = generators.Base.extend({
             message: 'Directory or File name',
             default: this.appname
         }, function(answers) {
-            dirOrFilePath = answers.dirOrFile;
+            dirOrFilePath = answers.dirOrFile.trim();
             done();
         }.bind(this));
     },
