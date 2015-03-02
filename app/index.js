@@ -1,13 +1,17 @@
-var generators = require('yeoman-generator');
-var astQuery = require('ast-query');
-var _ = require('lodash');
-var dirOrFilePath;
+var generators = require('yeoman-generator'),
+    astQuery = require('ast-query'),
+    _ = require('lodash'),
+    dirOrFilePath;
 
 var loadAndParseFile = function(that) {
     //if (fs.existsSync(filename))
     var fileString = that.fs.read(dirOrFilePath);
     //Replace all white space character, comment , including space, tab, form feed, line feed
-    return fileString.replace(/ \/\/.+\n/g, '').replace(/(\r\n|\n|\r)/gm, "");
+    return fileString
+        .replace(/ \/\/.+\n/g, '') //remove single line comment
+        .replace(/\/\*([\s\S]*?)\*\//g, '') //remove multiline comment
+        .replace(/(\r\n|\n|\r)/gm, "") //remove carriage and returns
+        .replace(/\s{2,}/g, ' '); //replace multiple space with single space
 };
 
 var getNgModuleName = function(tree) {
@@ -35,15 +39,19 @@ var getTestableComponentName = function(fileString, componentType) {
 };
 
 var getScopeVariables = function(fileString) {
-    var index = 1; // default to the first capturing group
-    var matches = [];
-    var match;
-    var regex = /\$scope\.([^=\.\$]*)[ +]=/g
-    while (match = regex.exec(fileString)) {
-        matches.push(match[index]);
+    var index = 1,
+        matches = [],
+        regex = /\$scope\.([^=\.\$]*)[ +]=/g,
+        match; // default to the first capturing group
+    try {
+        while (match = regex.exec(fileString)) {
+            matches.push(match[index]);
+        }
+    } catch (err) {
+        matches = ['scopeVariable1', 'scopeVariable2', 'scopeFunction1', 'scopeFunction1'];
     }
     return matches;
-}
+};
 
 module.exports = generators.Base.extend({
 
@@ -52,7 +60,7 @@ module.exports = generators.Base.extend({
         this.prompt({
             type: 'input',
             name: 'dirOrFile',
-            message: 'Directory or File name'
+            message: 'Absolute path of the Directory or File to be tested'
         }, function(answers) {
             dirOrFilePath = answers.dirOrFile.trim();
             done();
