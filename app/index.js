@@ -28,33 +28,39 @@ var getNgModuleName = function(tree) {
 var getTestableComponentName = function(fileString, componentType) {
     //for detailed regex explanation see https://regex101.com/.
     var regex = /angular[ .]+module\(['"]eikyoApp['"]\)[ .]+controller\(['"]([^'"]+)'/;
-    var ngComponent = regex.exec(fileString);
     var componentName;
     try {
-        componentName = ngComponent[1];
+        componentName = regex.exec(fileString)[1];
     } catch (err) {
         componentName = "testableComponentName"
     }
     return componentName;
 };
 
-var getScopeVariables = function(fileString) {
+var getScopeVariables = function(fileString, onlyFunctions) {
     var index = 1,
         matches = [],
         regex = /\$scope\.([^=\.\$]*)[ +]=/g,
-        match; // default to the first capturing group
+        match;
+
+    if (onlyFunctions) {
+        regex = /\$scope\.([^=\.\$]*)[ +]=/g;
+    }
     try {
         while (match = regex.exec(fileString)) {
             matches.push(match[index]);
         }
     } catch (err) {
-        matches = ['scopeVariable1', 'scopeVariable2', 'scopeFunction1', 'scopeFunction1'];
+        if (onlyFunctions) {
+            matches = ['scopeFunction1', 'scopeFunction1'];
+        } else {
+            matches = ['scopeVariable1', 'scopeVariable2', 'scopeFunction1', 'scopeFunction1'];
+        }
     }
     return matches;
 };
 
 module.exports = generators.Base.extend({
-
     prompting: function() {
         var done = this.async();
         this.prompt({
@@ -66,7 +72,6 @@ module.exports = generators.Base.extend({
             done();
         }.bind(this));
     },
-
     writing: function() {
         var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
         var fileString = loadAndParseFile(this);
