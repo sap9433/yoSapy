@@ -20,14 +20,14 @@ var getNgModuleName = function(tree) {
         var module = tree.callExpression('angular.module').nodes[0].arguments[0];
         ngModule = module.value;
     } catch (err) {
-        ngModule = '#ngModuleName#'
+        ngModule = 'ngModuleName'
     }
     return ngModule;
 };
 
-var getTestableComponentName = function(fileString, componentType) {
+var getTestableComponentName = function(fileString, componentType, moduleName) {
     //for detailed regex explanation see https://regex101.com/.
-    var regex = /angular[ .]+module\(['"]eikyoApp['"]\)[ .]+controller\(['"]([^'"]+)'/;
+    var regex = new RegExp("angular[ .]+module\\([\'\"]" + moduleName + "[\'\"]\\)[ .]+" + componentType + "\\([\'\"]([^\'\"]+)[\'\"]");
     var componentName;
     try {
         componentName = regex.exec(fileString)[1];
@@ -44,7 +44,7 @@ var getScopeVariables = function(fileString, onlyFunctions) {
         match;
 
     if (onlyFunctions) {
-        regex = /\$scope\.([^=\.\$]*)[ +]=/g;
+        regex = /\$scope\.([^=\.\$]*) = function[ \(]/g;
     }
     try {
         while (match = regex.exec(fileString)) {
@@ -77,14 +77,16 @@ module.exports = generators.Base.extend({
         var fileString = loadAndParseFile(this);
         var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
+        var moduleName = getNgModuleName(tree);
 
         this.fs.copyTpl(
             this.templatePath('controllerTest.js'),
             this.destinationPath(filename + '.js'), {
                 fileName: filename,
-                ngModule: getNgModuleName(tree),
-                componentName: getTestableComponentName(fileString, 'controller'),
-                scopeVariables: getScopeVariables(fileString)
+                ngModule: moduleName,
+                componentName: getTestableComponentName(fileString, 'controller', moduleName),
+                scopeVariables: getScopeVariables(fileString),
+                scopeFunctions: getScopeVariables(fileString, true)
             }
         );
     }
