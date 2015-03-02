@@ -29,7 +29,7 @@ var getTestableComponentName = function(fileString, componentType) {
     try {
         componentName = ngComponent[1];
     } catch (err) {
-        componentName = "#testEntityName#"
+        componentName = "testableComponentName"
     }
     return componentName;
 };
