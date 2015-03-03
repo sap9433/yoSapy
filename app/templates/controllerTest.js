@@ -1,10 +1,11 @@
 describe('Controller: <%= fileName %>', function() {
-    var scope, $location, <%= componentName %> ;
+    var scope, httpBackend, $location, <%= componentName %> ;
 
     beforeEach(module('<%= ngModule %>'));
 
-    beforeEach(inject(function($rootScope, $controller, _$location_) {
+    beforeEach(inject(function($rootScope, $controller, _$httpBackend_, _$location_) {
         $location = _$location_;
+        httpBackend = _$httpBackend_;
         scope = $rootScope.$new();
 
         /* Uncomment following line and provide dummy value for scope variables that's been used and not injected by generator
@@ -19,12 +20,40 @@ describe('Controller: <%= fileName %>', function() {
         });
     }));
 
+    it('should run the Test to get the link data from the backend', function() {
+        var controller = scope.$new(DashboardCtrl);
+        httpBackend.when('GET', '/api/salesdata/dashboarddropdown')
+            .respond({
+                viewLevel: 'resp.viewLevels',
+                products: 'resp.products',
+                roles: 'resp.roles',
+                offices: 'resp.offices'
+            });
+
+        httpBackend.expect('GET', '/api/salesdata/dashboarddropdown')
+            .respond({
+                viewLevel: 'resp.viewLevels',
+                products: 'resp.products',
+                roles: 'resp.roles',
+                offices: 'resp.offices'
+            });
+        httpBackend.flush();
+        expect(scope.products).toEqual('resp.products');
+
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('should have a method to check the routes', function() {
+        $location.path('/replaceWithRelatedUrl');
+        expect($location.path()).toBe('/replaceWithRelatedUrl');
+    });
+
     <%
     _.forEach(scopeVariables, function(scopeVariable) { %>
         it('scope.<%= scopeVariable %> should exhibit desired behavior', function() { <%
             if (scopeFunctions.indexOf(scopeVariable) > -1) { %>
-                scope. <%= scopeVariable %> ();
-                <%
+                scope. <%= scopeVariable %> (); <%
             } %>
             expect(scope. <%= scopeVariable %> ).toBeDefined();
         }); <%
