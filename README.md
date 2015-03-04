@@ -1,9 +1,10 @@
 # yoSapy
-AngularJS test generator. (Right now only works for controllers . test generator for directives and services are under construction... :) )
+AngularJS test generator. [Right now only works for controllers . test generator for directives and services are under construction...]
+
 - [x] Takes path of the angularJs file to be tested as input.
 - [x] Parses the file and generates a test file.
 - [x] Be ready for surprise - you will be amazed to see that most of these auto generated test are actually passing , 
-  and yo need to edit some of the test cases to make them pass(Obviously ).
+  and you need to edit rest, to make them pass (Obviously ).
 - [x] this auto generated test file takes your code coverage for that file from 0% to 40-50% without writing a single line of code . Now that's Freaking awesome!!!
 
 # Usage
