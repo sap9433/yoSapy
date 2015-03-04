@@ -66,7 +66,7 @@ module.exports = generators.Base.extend({
         this.prompt({
             type: 'input',
             name: 'dirOrFile',
-            message: 'Absolute path of the Directory or File to be tested'
+            message: 'Absolute path of the File to be tested'
         }, function(answers) {
             dirOrFilePath = answers.dirOrFile.trim();
             done();
