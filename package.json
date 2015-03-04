@@ -1,25 +1,117 @@
 {
-  "name": "generator-yosapy",
-  "version": "0.0.2",
-  "description": "Bulk jasmine test file generator ",
-  "main": "index.js",
-  "scripts": {
+    "name": "generator-yosapy",
+    "version": "0.0.3",
+    "description": "<article class='markdown-body entry-content' itemprop='mainContentOfPage'><h1> < a id = 'user-content-yosapy'
+    class = 'anchor'
+    href = '#yosapy'
+    aria - hidden = 'true' > < span class = 'octicon octicon-link' > < /span></a > yoSapy < /h1>
+
+    < p > AngularJS test generator.It is an yeoman generator.Generates customized Jasmine test
+    for your angularJs file[Right now only works
+        for controllers.test generator
+        for directives and services are under construction...] < /p>
+
+    < ul class = 'task-list' >
+    < li class = 'task-list-item' >
+    < input type = 'checkbox'
+    class = 'task-list-item-checkbox'
+    checked = ''
+    disabled = '' > Takes path of the angularJs file to be tested as input. < /li> < li class = 'task-list-item' >
+    < input type = 'checkbox'
+    class = 'task-list-item-checkbox'
+    checked = ''
+    disabled = '' > Parses the file and generates a test file. < /li> < li class = 'task-list-item' >
+    < input type = 'checkbox'
+    class = 'task-list-i'
+    em - checkbox ' checked='
+    ' disabled='
+    '> Be ready for surprise - you will be amazed to see that most of these auto generated test are actually passing , 
+    and you need to edit rest,
+    to make them pass(Obviously). < /li> < li class = 'task-list-item' >
+    < input type = 'checkbox'
+    class = 'task-list-item-checkbox'
+    checked = ''
+    disabled = '' > this auto generated test file takes your code coverage
+    for that file from 0 % to 40 - 50 % without writing a single line of code.Now that is Freaking awesome!!! < /li> < /ul>
+
+    < h1 >
+    < a id = 'user-content-usage'
+    class = 'anchor'
+    href = '#usage'
+    aria - hidden = 'true' > < span class = 'octicon octicon-link' > < /span></a > Usage < /h1>
+
+    < p > globally install the module < /p>
+
+    < pre > < code > npm install - g generator - yosapy < /code></pre >
+
+    < p > 1) Now go to the test folder in your Angular project, where you want the test file to be created. < /p>
+
+< pre > < code > cd~/path/To / Your / Test / Folder /
+    < /code></pre >
+
+    < p > 2) Now run following command.(It is a yeoman generator so you need to have yeoman installed) < /p>
+
+< pre > < code > yo yosapy < /code></pre >
+
+    < p > 3) It will prompt you
+for the path of the file to be tested.Provide absolute path of the file. < /p>
+
+< pre > < code > ? Absolute path of the File to be tested : absolutePath / of / file / myController.js < /code></pre >
+
+    < p > 4) This generator will parse your file and genearte a test file
+for you. < /p>
+
+< h1 >
+    < a id = 'user-content-caveat'
+class = 'anchor'
+href = '#caveat'
+aria - hidden = 'true' > < span class = 'octicon octicon-link' > < /span></a > Caveat < /h1>
+
+< p > This generators parses your file using and Esprima and Regex, and to produce meaningful, mostly passing, custom testcases, I had to make a hell lot of assumptions and even hell lot more fallBacks.here are some tips to help the generator not to fail with weired error messages
+for your input file. < /p>
+
+< ul class = 'task-list' >
+    < li class = 'task-list-item' >
+    < input type = 'checkbox'
+class = 'task-list-item-checkbox'
+checked = ''
+disabled = '' > Only tested this on Mac.Might fail
+for other Operatiing System(specially windows) < /li> < li class = 'task-list-item' >
+    < input type = 'checkbox'
+class = 'task-list-item-checkbox'
+checked = ''
+disabled = '' > Please ensure your input file is not having syntactical error(e.g passes JSLint) < /li> < li class = 'task-list-item' >
+    < input type = 'checkbox'
+class = 'task-list-item-checkbox'
+checked = ''
+disabled = '' > Your input file should contain a single component(It should not have more than one controlers or directive clubbed in a single file.) < /li> < /ul>
+
+< h1 >
+    < a id = 'user-content-support'
+class = 'anchor'
+href = '#support'
+aria - hidden = 'true' > < span class = 'octicon octicon-link' > < /span></a > Support < /h1>
+
+< p > This generator not working at all ? or generating gibberish ? then Probably the some of my 'assumptions' (to be specific regex and ast - queries) need to be refined.Feel free to shoot a mail at < a href = 'mailto:saptarshichatterjee1@gmail.com' > saptarshichatterjee1@ gmail.com < /a> with input.js file and I will be happy to help .</p >
+    < /article>",
+"main": "index.js",
+"scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+},
+"repository": {
     "type": "git",
     "url": "https://github.com/sap9433/yoSapy"
-  },
-  "keywords": [
+},
+"keywords": [
     "yeoman-generator",
     "jasmine generator",
     "test generator"
-  ],
-  "author": "Saptarshi Chatterjee <saptarshichatterjee1@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
+],
+"author": "Saptarshi Chatterjee <saptarshichatterjee1@gmail.com>",
+"license": "ISC",
+"dependencies": {
     "ast-query": "^1.0.1",
     "lodash": "^3.3.1",
     "yeoman-generator": "^0.18.9"
-  }
+}
 }
