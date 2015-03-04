@@ -1,5 +1,5 @@
 # yoSapy
-AngularJS test generator. [Right now only works for controllers . test generator for directives and services are under construction...]
+AngularJS test generator.It's an yeoman generator. Generates Jasmine test for your angularJs file [Right now only works for controllers . test generator for directives and services are under construction...]
 
 - [x] Takes path of the angularJs file to be tested as input.
 - [x] Parses the file and generates a test file.
