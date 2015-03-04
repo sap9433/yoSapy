@@ -1,6 +1,6 @@
 {
   "name": "generator-yosapy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Generates Jasmine test for your angularJs file, Most of these auto generated custom test cases will actually be passing and it will take file’s code coverage from 0% to 40%-50% without writing a single line of code, ain't that freaking awesome!!!",
   "main": "index.js",
   "scripts": {
