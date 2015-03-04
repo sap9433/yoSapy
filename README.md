@@ -16,7 +16,7 @@ npm install -g generator-yosapy
 ````
 cd ~/path/To/Your/Test/Folder/
 `````
-2) Now run following command
+2) Now run following command. ( It's a yeoman generator so you need to have yeoman installed)
 ```
 yo yosapy
 ```
