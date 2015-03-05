@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/sap9433/yoSapy.svg?branch=master)](https://travis-ci.org/sap9433/yoSapy)
 # yoSapy
 AngularJS test generator. It's an yeoman generator. Generates customized Jasmine test for your angularJs file [Right now only works for controllers . test generator for directives and services are under construction...]
 
