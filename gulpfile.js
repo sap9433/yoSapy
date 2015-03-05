@@ -3,7 +3,7 @@ var jasmine = require('gulp-jasmine');
 var istanbul = require('gulp-istanbul');
 
 gulp.task('test', function test(coverage) {
-    gulp.src(['app/index.js'])
+    gulp.src('app/index.js')
         .pipe(istanbul())
         .pipe(istanbul.hookRequire())
         .on('finish', function(argument) {
