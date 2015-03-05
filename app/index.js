@@ -38,6 +38,7 @@ var getTestableComponentName = function(fileString, componentType, moduleName) {
 };
 
 var getScopeVariables = function(fileString, onlyFunctions) {
+    console.log('sada');
     var index = 1,
         matches = [],
         regex = /\$scope\.([^=\.\$]*)[ +]=/g,
