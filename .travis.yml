@@ -1,5 +1,8 @@
 language: node_js
 before_script:
   - npm install gulp
+  - npm install -g codeclimate-test-reporter
+after_script:
+  - CODECLIMATE_REPO_TOKEN=1b32e0f2016b5d89c6fb4f9b4447152c74b6d45227bc3dbd6067576f759887fc codeclimate < coverage/lcov.info
 node_js:
   - "stable"
