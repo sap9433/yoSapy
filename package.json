@@ -21,5 +21,8 @@
     "ast-query": "^1.0.1",
     "lodash": "^3.3.1",
     "yeoman-generator": "^0.18.9"
+  },
+  "devDependencies": {
+    "gulp-jasmine": "^2.0.0"
   }
 }
