@@ -23,6 +23,7 @@
     "yeoman-generator": "^0.18.9"
   },
   "devDependencies": {
+    "gulp-istanbul": "^0.6.0",
     "gulp-jasmine": "^2.0.0"
   }
 }
