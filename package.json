@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "ast-query": "^1.0.1",
+    "gulp": "^3.8.11",
     "lodash": "^3.3.1",
     "yeoman-generator": "^0.18.9"
   },
