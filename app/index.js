@@ -99,3 +99,5 @@ module.exports = generators.Base.extend({
         );
     }
 });
+
+module.exports.getNgModuleName = getNgModuleName;
