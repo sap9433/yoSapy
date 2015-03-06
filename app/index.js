@@ -74,18 +74,25 @@ module.exports = generators.Base.extend({
         }.bind(this));
     },
     writing: function() {
-        var dirOrFileName = dirOrFilePath.split('/').reverse()[0];
+        var pathArray = dirOrFilePath.split('/').reverse();
+        var dirOrFileName = pathArray[0];
+        var componentType;
+        if (pathArray.indexOf('controllers') > -1) {
+            componentType = 'controller';
+        } else if (pathArray.indexOf('directives') > -1) {
+            componentType = 'directive';
+        }
         var fileString = loadAndParseFile(this);
         var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
         var moduleName = getNgModuleName(tree);
 
         this.fs.copyTpl(
-            this.templatePath('controllerTest.js'),
+            this.templatePath(componentType + '.js'),
             this.destinationPath(filename + '.js'), {
                 fileName: filename,
                 ngModule: moduleName,
-                componentName: getTestableComponentName(fileString, 'controller', moduleName),
+                componentName: getTestableComponentName(fileString, componentType, moduleName),
                 scopeVariables: getScopeVariables(fileString),
                 scopeFunctions: getScopeVariables(fileString, true)
             }
