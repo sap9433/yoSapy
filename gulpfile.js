@@ -8,7 +8,7 @@ gulp.task('test', function test(coverage) {
         	includeUntested: true
         }))
         .pipe(istanbul.hookRequire())
-        .on('finish', function(argument) {
+        .on('finish', function() {
             gulp.src(['test/*.js'])
                 .pipe(jasmine())
                 .pipe(istanbul.writeReports())
