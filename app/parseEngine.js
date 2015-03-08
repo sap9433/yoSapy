@@ -9,9 +9,7 @@ module.exports.getNgModuleName = function(tree) {
     return ngModule;
 };
 
-module.exports.loadAndParseFile = function(fs, dirOrFilePath) {
-    //if (fs.existsSync(filename))
-    var fileString = fs.read(dirOrFilePath);
+module.exports.loadAndParseFile = function(fileString) {
 
     //Replace all white space character, comment , including space, tab, form feed, line feed
     return fileString

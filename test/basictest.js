@@ -1,5 +1,6 @@
-var assert = require('yeoman-generator').assert;
-var app;
+var generator = require('yeoman-generator'),
+    assert = generator.assert,
+    app;
 
 describe("yosapy shoud work as expected", function() {
 
@@ -18,8 +19,25 @@ describe("yosapy shoud work as expected", function() {
         expect(moduleName).toBe('ngModuleName');
     });
 
-    it("getScopeVariables should give empty array if parsing fails", function() {
-        var scopeFunctions = parseEngine.getScopeVariables(undefined, true);
-        expect(scopeFunctions).not.toBeFalsy();
+    it("getScopeVariables should give proper scope variables and methods", function() {
+        var fs = require('fs');
+        var path = require('path');
+
+        var filePath = path.join(__dirname, 'testInputFiles/testController.js');
+        var rawFile = fs.readFileSync(filePath).toString();
+        console.log(rawFile);
+        var parsedFile = parseEngine.loadAndParseFile(rawFile);
+
+        var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
+        var scopeVariables = parseEngine.getScopeVariables(parsedFile);
+        expect(scopeFunctions.toString()).toBe(['addtoCompare', 'doneComparing', 'removeFromCompare'].toString());
+        console.log(scopeVariables);
+        expect(scopeVariables.toString()).toBe(['tobeCompared',
+            'entireList',
+            'addtoCompare',
+            'doneComparing',
+            'removeFromCompare'
+        ].toString());
+
     });
 });

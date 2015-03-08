@@ -4,6 +4,12 @@ var parseEngine = require('./parseEngine.js'),
     _ = require('lodash'),
     dirOrFilePath;
 
+var readFile = function(fs, dirOrFilePath) {
+    //if (fs.existsSync(filename))
+    var fileString = fs.read(dirOrFilePath);
+    return fileString;
+};
+
 module.exports = generators.Base.extend({
     prompting: function() {
         var done = this.async();
@@ -25,7 +31,10 @@ module.exports = generators.Base.extend({
         } else if (pathArray.indexOf('directives') > -1) {
             componentType = 'directive';
         }
-        var fileString = parseEngine.loadAndParseFile(this.fs, dirOrFilePath);
+        
+        var rawFile = readFile(this.fs, dirOrFilePath);
+        var fileString = parseEngine.loadAndParseFile(rawFile);
+
         var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
         var moduleName = parseEngine.getNgModuleName(tree);
