@@ -7,55 +7,50 @@ describe('Controller: <%= fileName %>', function() {
         $location = _$location_;
         httpBackend = _$httpBackend_;
         scope = $rootScope.$new();
-
-        /* Uncomment following line and provide dummy value for scope variables that's been used and not injected by generator
-         e.g. -> TypeError: 'undefined' is not an object (evaluating '$scope.someDummy.someKey... )*/
-        scope.staticText = {
-            week: "someValue"
-        };
-
+        /* Uncomment following line and provide mock value for scope variables 
+        that's been used and  not injected. You will get following kind of error otherwise
+        TypeError: 'undefined' is not an object (evaluating '$scope.someDummy.someKey... )*/
+        // scope.someDummy = {
+        //     someKey: "someValue"
+        // };
         <%=
         componentName %> = $controller('<%= componentName %>', {
             $scope: scope
         });
     }));
 
-    //If your controller is not using any http calls you can remove this test entirely . 
-    it('should run the Test to get the link data from the backend', function() {
+    //If your controller is not using any http calls you can remove this test entirely .
+    it('should get expected data from backend', function() {
 
         var controller = scope.$new( <%= componentName %> );
 
         //this sets the expectation that , which http calls the controller gonna make , 
         // and what response does it expects .
-        httpBackend.when('GET', '/api/salesdata/dashboarddropdown')
+        httpBackend.when('GET', '/apiThat/isBeenCalled/inYourCode')
             .respond({
-                viewLevel: 'resp.viewLevels',
-                products: 'resp.products',
-                roles: 'resp.roles',
-                offices: 'resp.offices'
+                someKey1: 'someValue',
+                someKey2: ['ele1', 'ele2']
             });
 
         //this sets the expectation that , which http calls the controller gonna make , 
         // and what response does it expects .
         httpBackend.expect('GET', '/api/salesdata/dashboarddropdown')
             .respond({
-                viewLevel: 'resp.viewLevels',
-                products: 'resp.products',
-                roles: 'resp.roles',
-                offices: 'resp.offices'
+                someKey1: 'someValue',
+                someKey2: ['ele1', 'ele2']
             });
 
         httpBackend.flush();
 
         /* test here the the value that getting changes in the 
          actual controller once the response received */
-        expect(scope.products).toEqual('resp.products');
+        expect(scope.someKey1).toEqual('someValue');
 
         httpBackend.verifyNoOutstandingExpectation();
         httpBackend.verifyNoOutstandingRequest();
     });
 
-    //
+    //If there's is no action to be tested based on $location in your controller yo can remove this test entirely.
     it('should have a method to check the routes', function() {
         $location.path('/replaceWithRelatedUrl');
         expect($location.path()).toBe('/replaceWithRelatedUrl');
