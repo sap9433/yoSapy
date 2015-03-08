@@ -9,9 +9,10 @@ module.exports.getNgModuleName = function(tree) {
     return ngModule;
 };
 
-module.exports.loadAndParseFile = function(that, dirOrFilePath) {
+module.exports.loadAndParseFile = function(fs, dirOrFilePath) {
     //if (fs.existsSync(filename))
-    var fileString = that.fs.read(dirOrFilePath);
+    var fileString = fs.read(dirOrFilePath);
+
     //Replace all white space character, comment , including space, tab, form feed, line feed
     return fileString
         .replace(/ \/\/.+\n/g, '') //remove single line comment
@@ -23,7 +24,7 @@ module.exports.loadAndParseFile = function(that, dirOrFilePath) {
 module.exports.getScopeVariables = function(fileString, onlyFunctions) {
     var index = 1,
         matches = [],
-        regex = /\$scope\.([^=\.\$]*)[ +]=/g,
+        regex = /\$scope\.([^=\)\.\$]*)[ +]=/g,
         match;
 
     if (onlyFunctions) {
@@ -31,7 +32,9 @@ module.exports.getScopeVariables = function(fileString, onlyFunctions) {
     }
     try {
         while (match = regex.exec(fileString)) {
-            matches.push(match[index]);
+            if (matches.indexOf(match[index]) < 0) {
+                matches.push(match[index]);
+            }
         }
     } catch (err) {
         if (onlyFunctions) {

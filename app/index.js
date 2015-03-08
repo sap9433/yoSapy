@@ -25,7 +25,7 @@ module.exports = generators.Base.extend({
         } else if (pathArray.indexOf('directives') > -1) {
             componentType = 'directive';
         }
-        var fileString = parseEngine.loadAndParseFile(this, dirOrFilePath);
+        var fileString = parseEngine.loadAndParseFile(this.fs, dirOrFilePath);
         var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
         var moduleName = parseEngine.getNgModuleName(tree);
