@@ -46,7 +46,8 @@ module.exports = generators.Base.extend({
                 ngModule: moduleName,
                 componentName: parseEngine.getTestableComponentName(fileString, componentType, moduleName),
                 scopeVariables: parseEngine.getScopeVariables(fileString),
-                scopeFunctions: parseEngine.getScopeVariables(fileString, true)
+                scopeFunctions: parseEngine.getScopeVariables(fileString, true),
+                undefinedScopreVar: parseEngine.undefinedScopreVar(fileString)
             }
         );
     }

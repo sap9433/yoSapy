@@ -7,12 +7,20 @@ describe('Controller: <%= fileName %>', function() {
         $location = _$location_;
         httpBackend = _$httpBackend_;
         scope = $rootScope.$new();
-        /* Uncomment following line and provide mock value for scope variables 
-        that's been used and  not injected. You will get following kind of error otherwise
-        TypeError: 'undefined' is not an object (evaluating '$scope.someDummy.someKey... )*/
-        // scope.someDummy = {
-        //     someKey: "someValue"
-        // };
+
+        <%
+        if (undefinedScopreVar) { %>
+            /* Following line and provides mock value for scope variables 's been used and  not injected. 
+            You will get following kind of error otherwise
+            TypeError: 'undefined' is not an object (evaluating '$scope.someDummy.someKey... )*/
+            <%
+        } %>
+        <%
+        _.forEach(undefinedScopreVar, function(eachVar) { %>
+            scope. <%= eachVar %> = {
+                someKey: "someValue"
+            }; <%
+        }); %>
         <%=
         componentName %> = $controller('<%= componentName %>', {
             $scope: scope

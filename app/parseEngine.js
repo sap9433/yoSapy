@@ -55,3 +55,20 @@ module.exports.getTestableComponentName = function(fileString, componentType, mo
     }
     return componentName;
 };
+
+module.exports.undefinedScopreVar = function(fileString) {
+    var index = 1,
+        regex = /= \$scope\.([^;]*)/g,
+        matches = [],
+        match;
+    try {
+        while (match = regex.exec(fileString)) {
+            if (matches.indexOf(match[index]) < 0) {
+                matches.push(match[index]);
+            }
+        }
+    } catch (err) {
+        generators.log('Error at undefinedScopreVar method' + err);
+    }
+    return matches;
+};
