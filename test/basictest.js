@@ -1,5 +1,11 @@
 var generator = require('yeoman-generator'),
     assert = generator.assert,
+    fs = require('fs'),
+    path = require('path'),
+    filePath = path.join(__dirname, 'testInputFiles/testController.js'),
+    rawFile = fs.readFileSync(filePath).toString(),
+    console.log(rawFile),
+    parsedFile = parseEngine.loadAndParseFile(rawFile),
     app;
 
 describe("yosapy shoud work as expected", function() {
@@ -20,14 +26,6 @@ describe("yosapy shoud work as expected", function() {
     });
 
     it("getScopeVariables should give proper scope variables and methods", function() {
-        var fs = require('fs');
-        var path = require('path');
-
-        var filePath = path.join(__dirname, 'testInputFiles/testController.js');
-        var rawFile = fs.readFileSync(filePath).toString();
-        console.log(rawFile);
-        var parsedFile = parseEngine.loadAndParseFile(rawFile);
-
         var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
         var scopeVariables = parseEngine.getScopeVariables(parsedFile);
         expect(scopeFunctions.toString()).toBe(['addtoCompare', 'doneComparing', 'removeFromCompare'].toString());
