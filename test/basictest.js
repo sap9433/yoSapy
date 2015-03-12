@@ -38,6 +38,12 @@ describe("yosapy shoud work as expected", function() {
 
     });
 
+    it("undefinedScopreVar should give all scope variables which are not defined but used.", function() {
+        var undefinedScopreVar = parseEngine.undefinedScopreVar(parsedFile);
+        console.log(undefinedScopreVar.toString());
+        expect(undefinedScopreVar.toString()).toBe(['$parent'].toString());
+    });
+
     it("getArgumentLists should give proper argument list JSON", function() {
         var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
         var argumentListJson = parseEngine.getArgumentLists(parsedFile, scopeFunctions);
