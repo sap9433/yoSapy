@@ -20,9 +20,14 @@ describe("yosapy shoud work as expected", function() {
         assert.file(['gulpfile.js', 'app/index.js', 'app/templates/controller.js', 'app/templates/directive.js', 'app/parseEngine.js']);
     });
 
-    it("getNgModuleName should return modulename as ngModule if tree is cant determone actual module", function() {
+    it("getNgModuleName should return modulename as ngModule if tree can't determine actual module name", function() {
         var moduleName = parseEngine.getNgModuleName('null tree');
         expect(moduleName).toBe('ngModuleName');
+    });
+
+    it("getTestableComponentName should return name of the testable component i.e. controller / directive / service name", function() {
+        var testableComponent = parseEngine.getTestableComponentName(parsedFile, 'controller', 'MyApp');
+        expect(testableComponent).toBe('MultiplecomparisonCtrl');
     });
 
     it("getScopeVariables should give proper scope variables and methods", function() {
