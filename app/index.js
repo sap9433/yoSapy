@@ -53,5 +53,8 @@ module.exports = generators.Base.extend({
                 methodArguments: methodArguments
             }
         );
+
+        console.
+        log('Your test ' + componentType + ' is succesfully created at \n' + this.destinationRoot() + '/' + dirOrFileName);
     }
 });

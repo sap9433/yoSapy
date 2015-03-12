@@ -92,6 +92,5 @@ module.exports.getArgumentLists = function(fileString, methods) {
             }).join(",");
         }
     });
-    console.log(JSON.stringify(argMap));
     return argMap;
 };
