@@ -17,7 +17,7 @@ describe("yosapy shoud work as expected", function() {
 
 
     it("app should contain required files", function() {
-        assert.file(['gulpfile.js', 'app/index.js', 'app/templates/controller.js', 'app/templates/directive.js']);
+        assert.file(['gulpfile.js', 'app/index.js', 'app/templates/controller.js', 'app/templates/directive.js', 'app/parseEngine.js']);
     });
 
     it("getNgModuleName should return modulename as ngModule if tree is cant determone actual module", function() {
@@ -41,7 +41,6 @@ describe("yosapy shoud work as expected", function() {
     it("getArgumentLists should give proper argument list JSON", function() {
         var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
         var argumentListJson = parseEngine.getArgumentLists(parsedFile, scopeFunctions);
-        console.log(JSON.stringify(argumentListJson));
         expect(argumentListJson.toString()).toBe({
             "addtoCompare": "'employeeId',' branchCode',' name',' localHqId',' localHqName',' regionHqId',' regionHqName'",
             "doneComparing": "'actionName'",
