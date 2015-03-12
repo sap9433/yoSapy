@@ -70,7 +70,7 @@ module.exports.undefinedScopreVar = function(fileString) {
             }
         }
     } catch (err) {
-        generators.log('Error at undefinedScopreVar method' + err);
+        console.log('Error at undefinedScopreVar method' + err);
     }
     return matches;
 };
