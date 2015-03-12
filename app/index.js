@@ -1,6 +1,7 @@
 var parseEngine = require('./parseEngine.js'),
     generators = require('yeoman-generator'),
     astQuery = require('ast-query'),
+    clc = require('cli-color'),
     dirOrFilePath;
 
 var readFile = function(fs, dirOrFilePath) {
@@ -15,7 +16,7 @@ module.exports = generators.Base.extend({
         this.prompt({
             type: 'input',
             name: 'dirOrFile',
-            message: 'Absolute path of the File to be tested'
+            message: clc.blue.bgYellow('Absolute path of the File to be tested')
         }, function(answers) {
             dirOrFilePath = answers.dirOrFile.trim();
             done();
@@ -55,6 +56,8 @@ module.exports = generators.Base.extend({
         );
 
         console.
-        log('Your test ' + componentType + ' is succesfully created at \n' + this.destinationRoot() + '/' + dirOrFileName);
+        log(
+            clc.blue.bgYellow('Your test ' + componentType + ' is succesfully created at \n' + this.destinationRoot() + '/' + dirOrFileName)
+        );
     }
 });
