@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports.getNgModuleName = function(tree) {
     var ngModule;
     try {
@@ -71,4 +73,25 @@ module.exports.undefinedScopreVar = function(fileString) {
         generators.log('Error at undefinedScopreVar method' + err);
     }
     return matches;
+};
+
+module.exports.getArgumentLists = function(fileString, methods) {
+    var regexString = " = function[ ]*\(([^\)]*)\)",
+        argMap = {};
+    var argList;
+
+    _.forEach(methods, function(method) {
+        var regex = new RegExp(method + regexString);
+        argList = regex.exec(fileString)[1];
+        //Strangely capturing group having a leading ( . Ideally I need to fix the regex
+        // But taking the shortcut here. 
+        argList = argList.replace("(", "");
+        if (argList.length > 0) {
+            argMap[method] = _.map(argList.split(','), function(arg) {
+                return "'" + arg + "'";
+            }).join(",");
+        }
+    });
+    console.log(JSON.stringify(argMap));
+    return argMap;
 };

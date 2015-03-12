@@ -1,7 +1,6 @@
 var parseEngine = require('./parseEngine.js'),
     generators = require('yeoman-generator'),
     astQuery = require('ast-query'),
-    _ = require('lodash'),
     dirOrFilePath;
 
 var readFile = function(fs, dirOrFilePath) {
@@ -31,13 +30,16 @@ module.exports = generators.Base.extend({
         } else if (pathArray.indexOf('directives') > -1) {
             componentType = 'directive';
         }
-        
+
         var rawFile = readFile(this.fs, dirOrFilePath);
         var fileString = parseEngine.loadAndParseFile(rawFile);
 
         var filename = dirOrFileName.replace('.js', '');
         var tree = astQuery(fileString);
         var moduleName = parseEngine.getNgModuleName(tree);
+
+        var getScopeFunctions = parseEngine.getScopeVariables(fileString, true);
+        var methodArguments = parseEngine.getArgumentLists(fileString, getScopeFunctions);
 
         this.fs.copyTpl(
             this.templatePath(componentType + '.js'),
@@ -46,8 +48,9 @@ module.exports = generators.Base.extend({
                 ngModule: moduleName,
                 componentName: parseEngine.getTestableComponentName(fileString, componentType, moduleName),
                 scopeVariables: parseEngine.getScopeVariables(fileString),
-                scopeFunctions: parseEngine.getScopeVariables(fileString, true),
-                undefinedScopreVar: parseEngine.undefinedScopreVar(fileString)
+                scopeFunctions: getScopeFunctions,
+                undefinedScopreVar: parseEngine.undefinedScopreVar(fileString),
+                methodArguments: methodArguments
             }
         );
     }

@@ -68,7 +68,7 @@ describe('Controller: <%= fileName %>', function() {
     _.forEach(scopeVariables, function(scopeVariable) { %>
         it('scope.<%= scopeVariable %> should exhibit desired behavior', function() { <%
             if (scopeFunctions.indexOf(scopeVariable) > -1) { %>
-                scope. <%= scopeVariable %> (); <%
+                scope. <%= scopeVariable %> ( <%= methodArguments[scopeVariable] %> ); <%
             } %>
             expect(scope. <%= scopeVariable %> ).toBeDefined();
         }); <%

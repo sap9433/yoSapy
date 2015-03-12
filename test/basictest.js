@@ -1,18 +1,18 @@
-var generator = require('yeoman-generator'),
+var app = require("../app/index.js"),
+    parseEngine = require("../app/parseEngine.js"),
+    generator = require('yeoman-generator'),
     assert = generator.assert,
     fs = require('fs'),
     path = require('path'),
     filePath = path.join(__dirname, 'testInputFiles/testController.js'),
     rawFile = fs.readFileSync(filePath).toString(),
-    console.log(rawFile),
-    parsedFile = parseEngine.loadAndParseFile(rawFile),
-    app;
+    parsedFile = parseEngine.loadAndParseFile(rawFile);
+
 
 describe("yosapy shoud work as expected", function() {
 
     beforeEach(function() {
-        app = require("../app/index.js");
-        parseEngine = require("../app/parseEngine.js");
+
     });
 
 
@@ -29,7 +29,6 @@ describe("yosapy shoud work as expected", function() {
         var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
         var scopeVariables = parseEngine.getScopeVariables(parsedFile);
         expect(scopeFunctions.toString()).toBe(['addtoCompare', 'doneComparing', 'removeFromCompare'].toString());
-        console.log(scopeVariables);
         expect(scopeVariables.toString()).toBe(['tobeCompared',
             'entireList',
             'addtoCompare',
@@ -37,5 +36,16 @@ describe("yosapy shoud work as expected", function() {
             'removeFromCompare'
         ].toString());
 
+    });
+
+    it("getArgumentLists should give proper argument list JSON", function() {
+        var scopeFunctions = parseEngine.getScopeVariables(parsedFile, true);
+        var argumentListJson = parseEngine.getArgumentLists(parsedFile, scopeFunctions);
+        console.log(JSON.stringify(argumentListJson));
+        expect(argumentListJson.toString()).toBe({
+            "addtoCompare": "'employeeId',' branchCode',' name',' localHqId',' localHqName',' regionHqId',' regionHqName'",
+            "doneComparing": "'actionName'",
+            "removeFromCompare": "'employeeId',' branchCode'"
+        }.toString());
     });
 });
